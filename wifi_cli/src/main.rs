@@ -1,10 +1,9 @@
 mod cli; // Add the CLI module
-mod logic; // Add module for the CLI tool logic
 
 // Import clap, cli, and logic stuff
 use clap::Parser;
 use cli::{Cli, Commands};
-use logic::{remove, setup};
+use cmd_lib::{remove, setup};
 
 fn main() {
     // Get the arguments given to the CLI

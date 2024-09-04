@@ -1,10 +1,6 @@
-[package]
-name = "wifi"
-version = "1.0.0"
-edition = "2021"
-authors = ["Bryan Hyland <bryan.hyland32@gmail.com>"]
-description = "Simple wrapper for Linux Network Manager functionality."
+[workspace]
 
-[dependencies]
-clap = { version = "4.5.15", features = ["derive"] }
-rpassword = "7.3.1"
+members = [ 
+    "cmd_lib",
+    "wifi_cli",
+]
