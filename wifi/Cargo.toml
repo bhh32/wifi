@@ -1,0 +1,8 @@
+[package]
+name = "wifi"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cmd_lib = { path = "../cmd_lib" }
+iced = "0.12.1"

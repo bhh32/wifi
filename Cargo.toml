@@ -1,6 +1,7 @@
 [workspace]
 
 members = [ 
-    "cmd_lib",
+    "cmd_lib", 
+    "wifi",
     "wifi_cli",
 ]
