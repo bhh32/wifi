@@ -2,6 +2,7 @@
 name = "wifi"
 version = "0.1.0"
 edition = "2021"
+authors = ["Bryan Hyland <bryan.hyland32@gmail.com>"]
 
 [dependencies]
 cmd_lib = { path = "../cmd_lib" }
