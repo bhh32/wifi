@@ -3,6 +3,7 @@ name = "wifi"
 version = "0.1.0"
 edition = "2021"
 authors = ["Bryan Hyland <bryan.hyland32@gmail.com>"]
+description = "GUI Wrapper utility for Linux's Network Manager CLI tool, nmcli. It's a basic Wi-Fi GUI utility to manage Wi-Fi network connections. "
 
 [dependencies]
 cmd_lib = { path = "../cmd_lib" }
