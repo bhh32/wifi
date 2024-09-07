@@ -8,4 +8,4 @@ description = "Simple wrapper for Linux Network Manager functionality."
 [dependencies]
 cmd_lib = { path = "../cmd_lib" }
 clap = { version = "4.5.15", features = ["derive"] }
-
+rpassword = "7.3.1"

@@ -1,12 +1,13 @@
 // All imports are for GUI implementation only.
 use crate::messages::Message;
-use crate::{setup, remove};
+use cmd_lib::{setup, remove};
 use iced::widget::{button, checkbox, column, text_input, text_input::TextInput, row, Theme, Renderer};
 use iced::Element;
 use iced::{Alignment::Center, Sandbox};
 
 /// AppState is the struct that holds the data for the
 /// application to use to create or remove a wifi network.
+/// This struct is used for both the CLI and GUI utilities.
 pub struct AppState {
     pub con_name: String,
     pub iface: String,
@@ -14,7 +15,6 @@ pub struct AppState {
     pub psk: String,
     pub is_hidden: bool,
     pub auto_con: bool,
-    pub is_cli: bool,
     pub use_dhcp: bool,
     pub ipv4: String,
     pub netmask: u32,
@@ -42,11 +42,11 @@ impl Sandbox for AppState {
         match message {
             // Add the network connection
             Message::Add => {
-                setup(&self);
+                setup(self.con_name.clone(), self.iface.clone(), self.ssid.clone(), self.psk.clone(), self.is_hidden, self.auto_con);
             },
             // Remove the network connection
             Message::Remove => {
-                remove(&self);
+                remove(self.con_name.clone());
             },
             // Update the connection name
             Message::UpdateConName(name) => self.con_name = name,
@@ -175,7 +175,6 @@ impl Default for AppState {
             psk: String::new(), 
             is_hidden: false, 
             auto_con: false, 
-            is_cli: false, 
             use_dhcp: true, 
             ipv4: String::new(), 
             netmask: 24, 

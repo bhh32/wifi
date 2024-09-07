@@ -450,10 +450,6 @@ dependencies = [
 [[package]]
 name = "cmd_lib"
 version = "0.1.0"
-dependencies = [
- "iced",
- "rpassword",
-]
 
 [[package]]
 name = "codespan-reporting"
@@ -3045,6 +3041,7 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "cmd_lib",
+ "rpassword",
 ]
 
 [[package]]
