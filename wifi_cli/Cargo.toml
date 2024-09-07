@@ -1,6 +1,6 @@
 [package]
 name = "wifi_cli"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Bryan Hyland <bryan.hyland32@gmail.com>"]
 description = "Simple wrapper for Linux Network Manager functionality."
