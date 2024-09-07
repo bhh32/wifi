@@ -5,3 +5,5 @@ members = [
     "wifi",
     "wifi_cli",
 ]
+
+workspace.resolver = "2"
