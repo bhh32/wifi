@@ -77,7 +77,7 @@ impl Sandbox for AppState {
 
     fn view(&self) -> Element<Message> {   
         // Create the connection name text box     
-        let con_name_text: TextInput<Message, Theme, Renderer> = text_input("SSID", &self.con_name)
+        let con_name_text: TextInput<Message, Theme, Renderer> = text_input("Connection Name", &self.con_name)
             .on_input(Message::UpdateConName)
             .padding(10)
             .size(20);
@@ -99,7 +99,8 @@ impl Sandbox for AppState {
         let psk_text: TextInput<Message, Theme, Renderer> = text_input("Wi-Fi Password", &self.psk)
             .on_input(Message::UpdatePsk)
             .padding(10)
-            .size(20);
+            .size(20)
+            .secure(true);
 
         // Create the hidden network checkbox
         let is_hidden_check = checkbox("Hidden Network", self.is_hidden)
