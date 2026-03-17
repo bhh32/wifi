@@ -1,9 +1,7 @@
 [workspace]
-
-members = [ 
-    "cmd_lib", 
+members = [
+    "cmd_lib",
     "wifi",
     "wifi_cli",
 ]
-
-workspace.resolver = "2"
+resolver = "2"

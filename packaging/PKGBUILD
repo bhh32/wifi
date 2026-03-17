@@ -1,0 +1,36 @@
+# Maintainer: Bryan Hyland <bryan.hyland32@gmail.com>
+pkgname=wifi-manager
+pkgver=0.3.0
+pkgrel=1
+pkgdesc="Network Manager CLI/GUI Wrapper for WiFi, Ethernet, and VPN connections"
+arch=('x86_64')
+url="https://github.com/bhh32/wifi"
+license=('GPL-3.0-only')
+depends=('networkmanager')
+makedepends=('rust' 'cargo')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    cd "wifi-$pkgver"
+    cargo build --release
+}
+
+package() {
+    cd "wifi-$pkgver"
+    install -Dm755 "target/release/wifi_cli" "$pkgdir/usr/bin/wifi-cli"
+    install -Dm755 "target/release/wifi" "$pkgdir/usr/bin/wifi-manager-gui"
+    install -Dm644 "LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+
+    # Desktop entry
+    install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/$pkgname.desktop" << EOF
+[Desktop Entry]
+Name=WiFi Manager
+Comment=Network Manager GUI Utility
+Exec=wifi-manager-gui
+Terminal=false
+Type=Application
+Categories=System;Network;Settings;
+Keywords=wifi;network;connection;
+EOF
+}

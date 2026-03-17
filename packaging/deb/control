@@ -1,0 +1,11 @@
+Package: wifi-manager
+Version: 0.3.0
+Section: net
+Priority: optional
+Architecture: amd64
+Depends: network-manager
+Maintainer: Bryan Hyland <bryan.hyland32@gmail.com>
+Description: Network Manager CLI/GUI Wrapper
+ A set of utilities for managing WiFi, Ethernet, and VPN connections
+ via Linux NetworkManager. Includes both a CLI tool (wifi_cli) and
+ a GUI application (wifi).
