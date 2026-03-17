@@ -219,7 +219,11 @@ pub fn export_profile(con_name: &str) -> Result<ConnectionProfile> {
             crate::types::ConnectionType::Ethernet
         }
         t if t.contains("vpn") => crate::types::ConnectionType::Vpn,
-        _ => crate::types::ConnectionType::Wifi,
+        _ => {
+            return Err(NetworkError::ParseError(format!(
+                "Unknown connection type: {conn_type}"
+            )));
+        }
     };
 
     Ok(ConnectionProfile {
@@ -281,7 +285,7 @@ pub fn import_profile(profile: &ConnectionProfile) -> Result<()> {
             args.push(key.clone());
             args.push(value.clone());
         }
-        let _ = nmcli::run_owned(&args);
+        nmcli::run_owned(&args)?;
     }
 
     info!("Connection profile '{}' imported", profile.name);

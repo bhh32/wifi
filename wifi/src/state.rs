@@ -383,7 +383,30 @@ impl cosmic::Application for AppState {
             }
 
             Message::OperationSuccess(msg) => {
-                self.status_message = Some((true, msg));
+                self.status_message = Some((true, msg.clone()));
+                // Reset forms after successful add operations
+                if msg.contains("WiFi connection") && msg.contains("created") {
+                    self.con_name.clear();
+                    self.ssid.clear();
+                    self.psk.clear();
+                    self.is_hidden = false;
+                    self.auto_con = false;
+                    self.use_dhcp = true;
+                    self.ipv4.clear();
+                    self.netmask = "24".to_string();
+                    self.gateway.clear();
+                    self.dns.clear();
+                    self.security = SecurityChoice::WpaPsk;
+                    self.priority.clear();
+                } else if msg.contains("Ethernet connection") && msg.contains("created") {
+                    self.eth_con_name.clear();
+                    self.eth_auto_con = false;
+                    self.eth_use_dhcp = true;
+                    self.eth_ipv4.clear();
+                    self.eth_netmask = "24".to_string();
+                    self.eth_gateway.clear();
+                    self.eth_dns.clear();
+                }
                 // Refresh connections after successful operation
                 return Task::perform(
                     async { load_connections().await },
