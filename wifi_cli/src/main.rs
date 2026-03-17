@@ -43,7 +43,15 @@ fn run_command(command: Commands) -> cmd_lib::Result<()> {
             let security_type: cmd_lib::SecurityType = security.into();
 
             let password = if security_type != cmd_lib::SecurityType::Open {
-                Some(prompt_password("Enter the Wi-Fi password: ").unwrap_or_default())
+                let pw = prompt_password("Enter the Wi-Fi password: ").map_err(|e| {
+                    cmd_lib::NetworkError::ValidationError(format!("Failed to read password: {e}"))
+                })?;
+                if pw.is_empty() {
+                    return Err(cmd_lib::NetworkError::ValidationError(
+                        "Password cannot be empty for secured networks".into(),
+                    ));
+                }
+                Some(pw)
             } else {
                 None
             };
@@ -99,7 +107,10 @@ fn run_command(command: Commands) -> cmd_lib::Result<()> {
             auto_con,
         } => {
             let password = if config_file.is_none() {
-                Some(prompt_password("Enter the VPN password: ").unwrap_or_default())
+                let pw = prompt_password("Enter the VPN password: ").map_err(|e| {
+                    cmd_lib::NetworkError::ValidationError(format!("Failed to read password: {e}"))
+                })?;
+                Some(pw)
             } else {
                 None
             };

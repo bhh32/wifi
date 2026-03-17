@@ -173,14 +173,22 @@ impl cosmic::Application for AppState {
 
             // Actions
             Message::AddWifi => {
-                let iface = self
-                    .wifi_interfaces
-                    .get(self.selected_wifi_iface)
-                    .map(|i| i.name.clone())
-                    .unwrap_or_default();
+                let iface = match self.wifi_interfaces.get(self.selected_wifi_iface) {
+                    Some(i) => i.name.clone(),
+                    None => {
+                        self.status_message = Some((false, "No WiFi interface selected".into()));
+                        return Task::none();
+                    }
+                };
 
                 let ipv4_config = if !self.use_dhcp {
-                    let prefix = self.netmask.parse().unwrap_or(24u32);
+                    let prefix: u32 = match self.netmask.parse() {
+                        Ok(p) if p <= 32 => p,
+                        _ => {
+                            self.status_message = Some((false, "Invalid CIDR prefix (must be 0-32)".into()));
+                            return Task::none();
+                        }
+                    };
                     let dns_list: Vec<String> = self
                         .dns
                         .split(',')
@@ -229,14 +237,22 @@ impl cosmic::Application for AppState {
             }
 
             Message::AddEthernet => {
-                let iface = self
-                    .eth_interfaces
-                    .get(self.selected_eth_iface)
-                    .map(|i| i.name.clone())
-                    .unwrap_or_default();
+                let iface = match self.eth_interfaces.get(self.selected_eth_iface) {
+                    Some(i) => i.name.clone(),
+                    None => {
+                        self.status_message = Some((false, "No Ethernet interface selected".into()));
+                        return Task::none();
+                    }
+                };
 
                 let ipv4_config = if !self.eth_use_dhcp {
-                    let prefix = self.eth_netmask.parse().unwrap_or(24u32);
+                    let prefix: u32 = match self.eth_netmask.parse() {
+                        Ok(p) if p <= 32 => p,
+                        _ => {
+                            self.status_message = Some((false, "Invalid CIDR prefix (must be 0-32)".into()));
+                            return Task::none();
+                        }
+                    };
                     let dns_list: Vec<String> = self
                         .eth_dns
                         .split(',')
